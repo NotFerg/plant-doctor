@@ -5,3 +5,12 @@
   flex-direction: column;
   justify-content: center;
 }
+
+footer {
+  background-color: #14532d;
+  color: white;
+}
+
+.section-title {
+  color: #14532d;
+}
