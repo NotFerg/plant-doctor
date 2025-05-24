@@ -173,6 +173,7 @@ function App() {
           </Container>
         </section>
       )}
+
       {!isLoading &&
         !error &&
         plantInfo &&
