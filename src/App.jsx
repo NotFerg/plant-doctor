@@ -11,6 +11,11 @@ import Col from "react-bootstrap/Col";
 function App() {
   const currentYear = new Date().getFullYear();
   const [file, setFile] = useState(null);
+  const [plantInfo, setPlantInfo] = useState("");
+  const [healthStatus, setHealthStatus] = useState("");
+  const [careInstructions, setCareInstructures] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -19,9 +24,12 @@ function App() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(null);
 
     if (!file) {
       alert("Please select a file before submitting.");
+      setIsLoading(false);
       return;
     }
 
@@ -43,7 +51,9 @@ function App() {
           contents: [
             {
               parts: [
-                { text: "Tell me about this plant" },
+                {
+                  text: "Tell me about this plant, in three separate paragraphs give me this  Plant Info – (e.g. species, name, type, growth facts), Health Status – (e.g. issues detected, level of health, symptoms) and lastly Care Instructions – (e.g. how to treat, water, sunlight, recovery steps)",
+                },
                 {
                   inlineData: {
                     mimeType: file.type,
@@ -67,12 +77,28 @@ function App() {
       }
       const data = await response.json();
 
-      const apiResponseText = data.candidates[0].content.parts[0].text
-        .replace(/\*\*(.*?)\*\*/g, "$1")
-        .trim();
-      console.log(apiResponseText);
+      const apiResponseText = data.candidates[0].content.parts[0].text;
+      const sections = apiResponseText
+        .split(/\n\s*\*\*.*?\*\*\s*\n/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+      const plant = sections[1];
+      const health = sections[2];
+      const care = sections[3];
+
+      setPlantInfo(plant);
+      setHealthStatus(health);
+      setCareInstructures(care);
+
+      console.log("API RESPONSE", apiResponseText);
     } catch (error) {
       console.error("Error:", error.message);
+      setError(error.message);
+      setPlantInfo("");
+      setHealthStatus("");
+      setCareInstructures("");
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
@@ -126,6 +152,63 @@ function App() {
           </form>
         </Container>
       </section>
+
+      {/* SHOW DATA */}
+      {isLoading && (
+        <section className='py-5'>
+          <Container className='text-center'>
+            <div className='spinner-border text-success' role='status'>
+              <span className='visually-hidden'>Loading...</span>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {error && (
+        <section className='py-5'>
+          <Container className='text-center'>
+            <div className='alert alert-danger' role='alert'>
+              {error}
+            </div>
+          </Container>
+        </section>
+      )}
+      {!isLoading &&
+        !error &&
+        plantInfo &&
+        healthStatus &&
+        careInstructions && (
+          <section>
+            <Container>
+              <Row className='g-4'>
+                <Col md={4}>
+                  <div className='card border-0 shadow-sm h-100'>
+                    <div className='card-body'>
+                      <h5 className='card-title'>Plant Info</h5>
+                      <p className='card-text text-muted'>{plantInfo}</p>
+                    </div>
+                  </div>
+                </Col>
+                <Col md={4}>
+                  <div className='card border-0 shadow-sm h-100'>
+                    <div className='card-body'>
+                      <h5 className='card-title'>Health Status</h5>
+                      <p className='card-text text-muted'>{healthStatus}</p>
+                    </div>
+                  </div>
+                </Col>
+                <Col md={4}>
+                  <div className='card border-0 shadow-sm h-100'>
+                    <div className='card-body'>
+                      <h5 className='card-title'>Care Instructions</h5>
+                      <p className='card-text text-muted'>{careInstructions}</p>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </section>
+        )}
       {/* How it Works */}
       <section className='py-5 bg-light'>
         <Container className='text-center'>
@@ -153,6 +236,7 @@ function App() {
           </Row>
         </Container>
       </section>
+
       {/* Why use Plant Doctor */}
       <section className='py-5 bg-white'>
         <Container className='text-center'>
