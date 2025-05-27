@@ -7,6 +7,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { TypeAnimation } from "react-type-animation";
 
 function App() {
   const currentYear = new Date().getFullYear();
@@ -132,11 +133,9 @@ function App() {
         </Container>
       </section>
       {/* UPLOAD */}
-      <section className='py-5'>
+      <section className='py-5' id='upload'>
         <Container className='text-center '>
-          <h2 className='section-title mb-4 section-title'>
-            📷 Upload Your Plant
-          </h2>
+          <h2 className='mb-4'>📷 Upload Your Plant</h2>
           <p className='text-muted mb-4'>
             We'll analyze your plant and tell you what's wrong — and how to fix
             it.
@@ -181,28 +180,58 @@ function App() {
         careInstructions && (
           <section>
             <Container>
-              <Row className='g-4'>
+              <Row className='g-4 py-5'>
                 <Col md={4}>
-                  <div className='card border-0 shadow-sm h-100'>
+                  <div className='plant-card h-100'>
+                    <div className='card-icon-wrapper'>
+                      <div className='card-icon plant-info-icon'>🌱</div>
+                    </div>
                     <div className='card-body'>
                       <h5 className='card-title'>Plant Info</h5>
-                      <p className='card-text text-muted'>{plantInfo}</p>
+                      <div className='card-divider'></div>
+                      <p className='card-text'>
+                        <TypeAnimation
+                          sequence={[plantInfo]}
+                          speed={75}
+                          cursor={false}
+                        />
+                      </p>
                     </div>
                   </div>
                 </Col>
                 <Col md={4}>
-                  <div className='card border-0 shadow-sm h-100'>
+                  <div className='plant-card h-100'>
+                    <div className='card-icon-wrapper'>
+                      <div className='card-icon health-status-icon'>💚</div>
+                    </div>
                     <div className='card-body'>
                       <h5 className='card-title'>Health Status</h5>
-                      <p className='card-text text-muted'>{healthStatus}</p>
+                      <div className='card-divider'></div>
+                      <p className='card-text'>
+                        <TypeAnimation
+                          sequence={[healthStatus]}
+                          speed={75}
+                          cursor={false}
+                        />
+                      </p>
                     </div>
                   </div>
                 </Col>
                 <Col md={4}>
-                  <div className='card border-0 shadow-sm h-100'>
+                  <div className='plant-card h-100'>
+                    <div className='card-icon-wrapper'>
+                      <div className='card-icon care-instructions-icon'>🌿</div>
+                    </div>
                     <div className='card-body'>
                       <h5 className='card-title'>Care Instructions</h5>
-                      <p className='card-text text-muted'>{careInstructions}</p>
+                      <div className='card-divider'></div>
+                      <p className='card-text'>
+                        <TypeAnimation
+                          sequence={[careInstructions]}
+                          speed={75}
+                          cursor={false}
+                        />
+                      </p>
                     </div>
                   </div>
                 </Col>
@@ -210,29 +239,26 @@ function App() {
             </Container>
           </section>
         )}
+
       {/* How it Works */}
-      <section className='py-5 bg-light'>
+      <section className='py-5 section-title'>
         <Container className='text-center'>
-          <h2 className='mb-5 section-title'>🌿 How It Works</h2>
+          <h2 className='mb-5'>🌿 How It Works</h2>
           <Row className='g-4'>
             <Col md={4}>
               <div className='fs-1 mb-2'>📤</div>
               <h5>1. Upload Image</h5>
-              <p className='text-muted'>
-                Snap a picture or upload from your gallery.
-              </p>
+              <p>Snap a picture or upload from your gallery.</p>
             </Col>
             <Col md={4}>
               <div className='fs-1 mb-2'>🧠</div>
               <h5>2. AI Diagnosis</h5>
-              <p className='text-muted'>
-                Our AI identifies the problem instantly.
-              </p>
+              <p>Our AI identifies the problem instantly.</p>
             </Col>
             <Col md={4}>
               <div className='fs-1 mb-2'>💡</div>
               <h5>3. Get Treatment</h5>
-              <p className='text-muted'>Get tips to restore plant health.</p>
+              <p>Get tips to restore plant health.</p>
             </Col>
           </Row>
         </Container>
@@ -241,11 +267,11 @@ function App() {
       {/* Why use Plant Doctor */}
       <section className='py-5 bg-white'>
         <Container className='text-center'>
-          <h2 className='mb-5 section-title'>✨ Why Use Plant Doctor?</h2>
+          <h2 className='mb-5'>✨ Why Use Plant Doctor?</h2>
           <Row className='g-4'>
             <Col md={4}>
               <div className='card border-0 shadow-sm h-100'>
-                <div className='card-body'>
+                <div className='card-body plant-card'>
                   <h5 className='card-title'>Instant Results</h5>
                   <p className='card-text text-muted'>
                     No waiting, no sign-up. Just snap and diagnose.
@@ -255,7 +281,7 @@ function App() {
             </Col>
             <Col md={4}>
               <div className='card border-0 shadow-sm h-100'>
-                <div className='card-body'>
+                <div className='card-body plant-card'>
                   <h5 className='card-title'>Free to Use</h5>
                   <p className='card-text text-muted'>
                     Built with AWS free-tier and Gemini API.
@@ -265,7 +291,7 @@ function App() {
             </Col>
             <Col md={4}>
               <div className='card border-0 shadow-sm h-100'>
-                <div className='card-body'>
+                <div className='card-body plant-card'>
                   <h5 className='card-title'>AI Powered</h5>
                   <p className='card-text text-muted'>
                     Uses Google Gemini’s advanced vision model.
