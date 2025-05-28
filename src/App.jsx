@@ -8,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { TypeAnimation } from "react-type-animation";
+import Swal from "sweetalert2";
 
 function App() {
   const currentYear = new Date().getFullYear();
@@ -20,6 +21,26 @@ function App() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+    if (!allowedTypes.includes(file.type)) {
+      Swal.fire({
+        title: "Error!",
+        text: "Only JPEG,JPG and PNG images are allowed",
+        icon: "error",
+      });
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      Swal.fire({
+        title: "Warining!",
+        text: "File size must be under 5MB",
+        icon: "warning",
+      });
+      return;
+    }
+
     setFile(file);
   };
 
@@ -29,7 +50,12 @@ function App() {
     setError(null);
 
     if (!file) {
-      alert("Please select a file before submitting.");
+      Swal.fire({
+        title: "Error!",
+        text: "No Image Attached",
+        icon: "error",
+        // confirmButtonText: "Cool",
+      });
       setIsLoading(false);
       return;
     }
@@ -53,7 +79,7 @@ function App() {
             {
               parts: [
                 {
-                  text: "Tell me about this plant, in three separate paragraphs give me this  Plant Info – (e.g. species, name, type, growth facts), Health Status – (e.g. issues detected, level of health, symptoms) and lastly Care Instructions – (e.g. how to treat, water, sunlight, recovery steps)",
+                  text: "First identify if this is a plant or not, if not reply 'Not A Plant' else, Tell me about this plant, in three separate paragraphs give me this Plant Info – (e.g. species, name, type, growth facts), Health Status – (e.g. issues detected, level of health, symptoms) and lastly Care Instructions – (e.g. how to treat, water, sunlight, recovery steps)",
                 },
                 {
                   inlineData: {
@@ -73,12 +99,23 @@ function App() {
         import.meta.env.VITE_GEMINI_API,
         requestOptions
       );
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const data = await response.json();
 
       const apiResponseText = data.candidates[0].content.parts[0].text;
+
+      if (apiResponseText.includes("Not A Plant")) {
+        Swal.fire({
+          title: "Not a Plant",
+          text: "The Image you have attached is not a plant",
+          icon: "question",
+          // confirmButtonText: "Cool",
+        });
+      }
       const sections = apiResponseText
         .split(/\n\s*\*\*.*?\*\*\s*\n/)
         .map((s) => s.trim())
