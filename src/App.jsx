@@ -149,13 +149,13 @@ function App() {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
               <Nav.Link href='#home'>Home</Nav.Link>
-              <Nav.Link href='#link'>About</Nav.Link>
+              {/* <Nav.Link href='#link'>About</Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
       {/* HERO */}
-      <section className='hero px-3'>
+      <section className='hero px-3' id='home'>
         <Container className='text-center'>
           <h1 className='display-4 fw-bold mb-3 text-success'>
             🪴 Plant Doctor AI
