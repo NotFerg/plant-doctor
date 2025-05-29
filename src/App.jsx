@@ -1,17 +1,18 @@
 import { useState } from "react";
 import "./App.css";
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { TypeAnimation } from "react-type-animation";
 import Swal from "sweetalert2";
+import Footer from "./components/Footer/Footer.jsx";
+import Hero from "./components/Hero/Hero.jsx";
+import NavBar from "./components/NavBar/NavBar.jsx";
+import WhyUse from "./components/WhyUse/WhyUse.jsx";
+import HowIt from "./components/HowIt/HowIt.jsx";
 
 function App() {
-  const currentYear = new Date().getFullYear();
   const [file, setFile] = useState(null);
   const [plantInfo, setPlantInfo] = useState("");
   const [healthStatus, setHealthStatus] = useState("");
@@ -142,33 +143,9 @@ function App() {
   return (
     <>
       {/* Navbar */}
-      <Navbar expand='lg' className='bg-body-tertiary'>
-        <Container>
-          <Navbar.Brand href='#home'>🪴 Plant Doctor</Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
-              <Nav.Link href='#home'>Home</Nav.Link>
-              {/* <Nav.Link href='#link'>About</Nav.Link> */}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <NavBar />
       {/* HERO */}
-      <section className='hero px-3' id='home'>
-        <Container className='text-center'>
-          <h1 className='display-4 fw-bold mb-3 text-success'>
-            🪴 Plant Doctor AI
-          </h1>
-          <p className='lead text-muted mb-4'>
-            Upload a photo of your plant and get an instant diagnosis using AI.
-            Know what’s wrong and how to fix it.
-          </p>
-          <a href='#upload' className='btn btn-success btn-lg px-4'>
-            Try It Now
-          </a>
-        </Container>
-      </section>
+      <Hero />
       {/* UPLOAD */}
       <section className='py-5' id='upload'>
         <Container className='text-center '>
@@ -276,77 +253,12 @@ function App() {
             </Container>
           </section>
         )}
-
       {/* How it Works */}
-      <section className='py-5 section-title'>
-        <Container className='text-center'>
-          <h2 className='mb-5'>🌿 How It Works</h2>
-          <Row className='g-4'>
-            <Col md={4}>
-              <div className='fs-1 mb-2'>📤</div>
-              <h5>1. Upload Image</h5>
-              <p>Snap a picture or upload from your gallery.</p>
-            </Col>
-            <Col md={4}>
-              <div className='fs-1 mb-2'>🧠</div>
-              <h5>2. AI Diagnosis</h5>
-              <p>Our AI identifies the problem instantly.</p>
-            </Col>
-            <Col md={4}>
-              <div className='fs-1 mb-2'>💡</div>
-              <h5>3. Get Treatment</h5>
-              <p>Get tips to restore plant health.</p>
-            </Col>
-          </Row>
-        </Container>
-      </section>
-
+      <HowIt />
       {/* Why use Plant Doctor */}
-      <section className='py-5 bg-white'>
-        <Container className='text-center'>
-          <h2 className='mb-5'>✨ Why Use Plant Doctor?</h2>
-          <Row className='g-4'>
-            <Col md={4}>
-              <div className='card border-0 shadow-sm h-100'>
-                <div className='card-body plant-card'>
-                  <h5 className='card-title'>Instant Results</h5>
-                  <p className='card-text text-muted'>
-                    No waiting, no sign-up. Just snap and diagnose.
-                  </p>
-                </div>
-              </div>
-            </Col>
-            <Col md={4}>
-              <div className='card border-0 shadow-sm h-100'>
-                <div className='card-body plant-card'>
-                  <h5 className='card-title'>Free to Use</h5>
-                  <p className='card-text text-muted'>
-                    Built with AWS free-tier and Gemini API.
-                  </p>
-                </div>
-              </div>
-            </Col>
-            <Col md={4}>
-              <div className='card border-0 shadow-sm h-100'>
-                <div className='card-body plant-card'>
-                  <h5 className='card-title'>AI Powered</h5>
-                  <p className='card-text text-muted'>
-                    Uses Google Gemini’s advanced vision model.
-                  </p>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </section>
+      <WhyUse />
       {/* Footer */}
-      <footer className='py-4 text-center'>
-        <Container>
-          <p className='mb-0'>
-            © {currentYear} Plant Doctor AI. Built by Fergus Miles Ampuan.
-          </p>
-        </Container>
-      </footer>
+      <Footer />
     </>
   );
 }

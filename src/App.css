@@ -1,18 +1,6 @@
-.hero {
-  background-color: #e9fce7;
-  min-height: 92vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 footer {
   background-color: #14532d;
   color: white;
-}
-
-.section-title {
-  background-color: #e9fce7 !important;
 }
 
 /* Enhanced Plant Cards */
@@ -105,24 +93,3 @@ footer {
   text-align: left;
   margin: 0;
 }
-
-/* Responsive adjustments */
-/* @media (max-width: 768px) {
-  .plant-card {
-    margin-bottom: 2rem;
-  }
-
-  .card-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-  }
-
-  .plant-card .card-title {
-    font-size: 1.2rem;
-  }
-
-  .plant-card .card-text {
-    font-size: 0.9rem;
-  }
-} */
