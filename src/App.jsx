@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Container from "react-bootstrap/Container";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -17,7 +17,7 @@ function App() {
   const [file, setFile] = useState(null);
   const [plantInfo, setPlantInfo] = useState("");
   const [healthStatus, setHealthStatus] = useState("");
-  const [careInstructions, setCareInstructures] = useState("");
+  const [careInstructions, setCareInstructions] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -114,7 +114,7 @@ function App() {
 
       setPlantInfo(plant);
       setHealthStatus(health);
-      setCareInstructures(care);
+      setCareInstructions(care);
 
       console.log("API RESPONSE", apiResponseText);
     } catch (error) {
@@ -122,11 +122,18 @@ function App() {
       setError(error.message);
       setPlantInfo("");
       setHealthStatus("");
-      setCareInstructures("");
+      setCareInstructions("");
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      SwalModal("Error!", error, "error");
+    }
+  }, [error]);
+
   return (
     <>
       {/* Navbar */}
@@ -163,8 +170,6 @@ function App() {
           </Container>
         </section>
       )}
-
-      {error && SwalModal("Not a Plant!", { error }, "error")}
 
       {!isLoading &&
         !error &&
