@@ -11,6 +11,7 @@ import Hero from "./components/Hero/Hero.jsx";
 import NavBar from "./components/NavBar/NavBar.jsx";
 import WhyUse from "./components/WhyUse/WhyUse.jsx";
 import HowIt from "./components/HowIt/HowIt.jsx";
+import SwalModal from "./components/SwalModal/SwalModal.jsx";
 
 function App() {
   const [file, setFile] = useState(null);
@@ -25,20 +26,12 @@ function App() {
     const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
 
     if (!allowedTypes.includes(file.type)) {
-      Swal.fire({
-        title: "Error!",
-        text: "Only JPEG,JPG and PNG images are allowed",
-        icon: "error",
-      });
+      SwalModal("Error!", "Only JPEG,JPG and PNG images are allowed", "error");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      Swal.fire({
-        title: "Warining!",
-        text: "File size must be under 5MB",
-        icon: "warning",
-      });
+      SwalModal("Warning!", "File size must be under 5M", "error");
       return;
     }
 
@@ -51,12 +44,7 @@ function App() {
     setError(null);
 
     if (!file) {
-      Swal.fire({
-        title: "Error!",
-        text: "No Image Attached",
-        icon: "error",
-        // confirmButtonText: "Cool",
-      });
+      SwalModal("Error!", "No Image Attached", "error");
       setIsLoading(false);
       return;
     }
@@ -110,12 +98,11 @@ function App() {
       const apiResponseText = data.candidates[0].content.parts[0].text;
 
       if (apiResponseText.includes("Not A Plant")) {
-        Swal.fire({
-          title: "Not a Plant",
-          text: "The Image you have attached is not a plant",
-          icon: "question",
-          // confirmButtonText: "Cool",
-        });
+        SwalModal(
+          "Not a Plant!",
+          "The Image you have attached is not a plant",
+          "error"
+        );
       }
       const sections = apiResponseText
         .split(/\n\s*\*\*.*?\*\*\s*\n/)
@@ -177,15 +164,7 @@ function App() {
         </section>
       )}
 
-      {error && (
-        <section className='py-5'>
-          <Container className='text-center'>
-            <div className='alert alert-danger' role='alert'>
-              {error}
-            </div>
-          </Container>
-        </section>
-      )}
+      {error && SwalModal("Not a Plant!", { error }, "error")}
 
       {!isLoading &&
         !error &&
