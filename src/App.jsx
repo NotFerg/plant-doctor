@@ -43,87 +43,103 @@ function App() {
     setIsLoading(true);
     setError(null);
 
+    const maxRetries = 3;
+    let attempt = 0;
+
     if (!file) {
       SwalModal("Error!", "No Image Attached", "error");
       setIsLoading(false);
       return;
     }
 
-    try {
-      // Convert file to base64
-      const base64File = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
+    while (attempt < maxRetries) {
+      try {
+        // Convert file to base64
+        const base64File = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = (error) => reject(error);
+        });
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: "First identify if this is a plant or not, if not reply 'Not A Plant' else, Tell me about this plant, in three separate paragraphs give me this Plant Info – (e.g. species, name, type, growth facts), Health Status – (e.g. issues detected, level of health, symptoms) and lastly Care Instructions – (e.g. how to treat, water, sunlight, recovery steps)",
-                },
-                {
-                  inlineData: {
-                    mimeType: file.type,
-                    data: base64File.includes(",")
-                      ? base64File.split(",")[1]
-                      : "",
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            contents: [
+              {
+                parts: [
+                  {
+                    text: "First identify if this is a plant or not, if not reply 'Not A Plant' else, Tell me about this plant, in three separate paragraphs give me this Plant Info – (e.g. species, name, type, growth facts), Health Status – (e.g. issues detected, level of health, symptoms) and lastly Care Instructions – (e.g. how to treat, water, sunlight, recovery steps)",
                   },
-                },
-              ],
-            },
-          ],
-        }),
-      };
+                  {
+                    inlineData: {
+                      mimeType: file.type,
+                      data: base64File.includes(",")
+                        ? base64File.split(",")[1]
+                        : "",
+                    },
+                  },
+                ],
+              },
+            ],
+          }),
+        };
 
-      const response = await fetch(
-        import.meta.env.VITE_GEMINI_API,
-        requestOptions
-      );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      const apiResponseText = data.candidates[0].content.parts[0].text;
-
-      if (apiResponseText.includes("Not A Plant")) {
-        SwalModal(
-          "Not a Plant!",
-          "The Image you have attached is not a plant",
-          "error"
+        const response = await fetch(
+          import.meta.env.VITE_GEMINI_API,
+          requestOptions
         );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const apiResponseText = data.candidates[0].content.parts[0].text;
+
+        if (apiResponseText.includes("Not A Plant")) {
+          Swal.fire({
+            title: "Not a Plant",
+            text: "The Image you have attached is not a plant",
+            icon: "question",
+            // confirmButtonText: "Cool",
+          });
+        }
+        const sections = apiResponseText
+          .split(/\n\s*\*\*.*?\*\*\s*\n/)
+          .map((s) => s.trim())
+          .filter((s) => s.length > 0);
+        const plant = sections[1];
+        const health = sections[2];
+        const care = sections[3];
+
+        setPlantInfo(plant);
+        setHealthStatus(health);
+        setCareInstructures(care);
+
+        console.log("API RESPONSE", apiResponseText);
+
+        break;
+      } catch (error) {
+        console.log("ERROR", error);
+        console.error("Attempt", attempt + 1, "failed:", error.message);
+
+        if (attempt === maxRetries) {
+          setError(error.message);
+          setPlantInfo("");
+          setHealthStatus("");
+          setCareInstructures("");
+          Swal.fire({
+            title: "Error",
+            text: "Server might be warming up. Please try again in a few seconds.",
+            icon: "warning",
+          });
+        }
       }
-      const sections = apiResponseText
-        .split(/\n\s*\*\*.*?\*\*\s*\n/)
-        .map((s) => s.trim())
-        .filter((s) => s.length > 0);
-      const plant = sections[1];
-      const health = sections[2];
-      const care = sections[3];
-
-      setPlantInfo(plant);
-      setHealthStatus(health);
-      setCareInstructures(care);
-
-      console.log("API RESPONSE", apiResponseText);
-    } catch (error) {
-      console.error("Error:", error.message);
-      setError(error.message);
-      setPlantInfo("");
-      setHealthStatus("");
-      setCareInstructures("");
-    } finally {
+      attempt++;
       setIsLoading(false);
     }
   };
