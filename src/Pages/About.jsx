@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import NavBar from "../components/NavBar/NavBar";
 import Pic from "../../src/assets/Pic.jpg";
+import email from "../../src/assets/mail.png";
 import WhyUse from "../components/WhyUse/WhyUse";
 
 const About = () => {
@@ -54,16 +55,49 @@ const About = () => {
           </Row>
         </Container>
       </section>
-      <section>
+      <section className='py-5'>
         <Container>
-          <Row>
-            <Col md={4} style={{ backgroundColor: "red" }}>
+          <Row className='g-4'>
+            <Col
+              md={4}
+              style={{
+                borderRadius: "20px",
+                boxShadow: "0 10px 30px rgba(34, 197, 94, 0.1)",
+                padding: "20px",
+              }}
+              className='bg-white'
+            >
               <h1>Contact Information</h1>
-              <p>Email</p>
-              <p>test@gmail.com</p>
+
+              <Row className='align-items-center mt-3'>
+                <Col xs='auto'>
+                  <div
+                    className='bg-light d-flex align-items-center justify-content-center rounded-circle'
+                    style={{ width: "48px", height: "48px" }}
+                  >
+                    <img
+                      src={email}
+                      alt='Email icon'
+                      style={{ width: "24px", height: "24px" }}
+                    />
+                  </div>
+                </Col>
+                <Col>
+                  <div className='fw-semibold text-dark'>Email</div>
+                  <div className='text-muted'>test@gmail.com</div>
+                </Col>
+              </Row>
             </Col>
-            <Col md={8} style={{ backgroundColor: "blue" }}>
-              aa
+
+            <Col
+              md={8}
+              style={{
+                borderRadius: "20px",
+                boxShadow: "0 10px 30px rgba(34, 197, 94, 0.1)",
+                padding: "20px",
+              }}
+            >
+              <h1>Send me a message</h1>
             </Col>
           </Row>
         </Container>
