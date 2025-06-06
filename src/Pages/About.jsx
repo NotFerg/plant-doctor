@@ -1,11 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import NavBar from "../components/NavBar/NavBar";
 import Pic from "../../src/assets/Pic.jpg";
 import email from "../../src/assets/mail.png";
+import Location from "../../src/assets/location.png";
+import github from "../../src/assets/github.png";
+import instagram from "../../src/assets/instagram.png";
+import facebook from "../../src/assets/facebook.png";
+import linkedin from "../../src/assets/linkedin.png";
 import WhyUse from "../components/WhyUse/WhyUse";
+import Footer from "../components/Footer/Footer";
+import plane from "../../src/assets/paper-plane.png";
 
 const About = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 📨 Simulate send message (you can replace this with actual API call)
+    alert(`Message sent!\n\n${JSON.stringify(formData, null, 2)}`);
+  };
   return (
     <>
       <NavBar />
@@ -32,6 +55,7 @@ const About = () => {
                   width: "450px",
                   height: "450px",
                   objectFit: "cover",
+                  objectPosition: "center 25%",
                 }}
               />
             </Col>
@@ -55,55 +79,192 @@ const About = () => {
           </Row>
         </Container>
       </section>
-      <section className='py-5'>
+      <section className='py-5' style={{ backgroundColor: "#f8f9fa" }}>
         <Container>
-          <Row className='g-4'>
-            <Col
-              md={4}
-              style={{
-                borderRadius: "20px",
-                boxShadow: "0 10px 30px rgba(34, 197, 94, 0.1)",
-                padding: "20px",
-              }}
-              className='bg-white'
-            >
-              <h1>Contact Information</h1>
+          <Row className='g-5 align-items-stretch'>
+            <Col md={4}>
+              <div className='p-4 bg-white border rounded-4 shadow h-100'>
+                <h2 className='pb-2'>Contact Information</h2>
 
-              <Row className='align-items-center mt-3'>
-                <Col xs='auto'>
-                  <div
-                    className='bg-light d-flex align-items-center justify-content-center rounded-circle'
-                    style={{ width: "48px", height: "48px" }}
-                  >
-                    <img
-                      src={email}
-                      alt='Email icon'
-                      style={{ width: "24px", height: "24px" }}
-                    />
-                  </div>
-                </Col>
-                <Col>
-                  <div className='fw-semibold text-dark'>Email</div>
-                  <div className='text-muted'>test@gmail.com</div>
-                </Col>
-              </Row>
+                <Row className='align-items-center mt-3'>
+                  <Col xs='auto'>
+                    <div
+                      className='bg-light d-flex align-items-center justify-content-center rounded-circle'
+                      style={{ width: "48px", height: "48px" }}
+                    >
+                      <img
+                        src={email}
+                        alt='Email icon'
+                        style={{ width: "24px", height: "24px" }}
+                      />
+                    </div>
+                  </Col>
+                  <Col>
+                    <div className='fw-semibold text-dark'>Email</div>
+                    <div className='text-muted'>fergus.ampuan@gmail.com</div>
+                  </Col>
+                </Row>
+
+                <Row className='mt-3'>
+                  <Col xs='auto'>
+                    <div
+                      className='bg-light d-flex align-items-center justify-content-center rounded-circle'
+                      style={{ width: "48px", height: "48px" }}
+                    >
+                      <img
+                        src={Location}
+                        alt='Location icon'
+                        style={{ width: "24px", height: "24px" }}
+                      />
+                    </div>
+                  </Col>
+                  <Col>
+                    <div className='fw-semibold text-dark'>Location</div>
+                    <div className='text-muted'>Christchurch, New Zealand</div>
+                  </Col>
+                </Row>
+
+                <h5 className='pt-4'>Connect with me</h5>
+
+                <Row className='my-3'>
+                  <Col xs='auto'>
+                    <div className='d-flex gap-3'>
+                      <a href='https://github.com/NotFerg'>
+                        <div
+                          className='bg-light rounded-circle d-flex justify-content-center align-items-center'
+                          style={{ width: "48px", height: "48px" }}
+                        >
+                          <img
+                            src={github}
+                            alt='Github icon'
+                            style={{ width: "24px", height: "24px" }}
+                          />
+                        </div>
+                      </a>
+
+                      <a href='https://www.linkedin.com/in/fergus-ampuan/'>
+                        <div
+                          className='bg-light rounded-circle d-flex justify-content-center align-items-center'
+                          style={{ width: "48px", height: "48px" }}
+                        >
+                          <img
+                            src={linkedin}
+                            alt='LinkedIn icon'
+                            style={{ width: "24px", height: "24px" }}
+                          />
+                        </div>
+                      </a>
+
+                      <a href='https://www.facebook.com/miles.ampuan/'>
+                        <div
+                          className='bg-light rounded-circle d-flex justify-content-center align-items-center'
+                          style={{ width: "48px", height: "48px" }}
+                        >
+                          <img
+                            src={facebook}
+                            alt='Facebook icon'
+                            style={{ width: "24px", height: "24px" }}
+                          />
+                        </div>
+                      </a>
+
+                      <a href='https://www.instagram.com/not__ferg/'>
+                        <div
+                          className='bg-light rounded-circle d-flex justify-content-center align-items-center'
+                          style={{ width: "48px", height: "48px" }}
+                        >
+                          <img
+                            src={instagram}
+                            alt='Instagram icon'
+                            style={{ width: "24px", height: "24px" }}
+                          />
+                        </div>
+                      </a>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </Col>
 
-            <Col
-              md={8}
-              style={{
-                borderRadius: "20px",
-                boxShadow: "0 10px 30px rgba(34, 197, 94, 0.1)",
-                padding: "20px",
-              }}
-            >
-              <h1>Send me a message</h1>
+            <Col md={8}>
+              <div className='p-4 bg-white border rounded-4 shadow h-100'>
+                <h2 className='pb-2'>Send me a message</h2>
+                <form action={handleSubmit}>
+                  <Row>
+                    <Col xs={6}>
+                      <label for='name' class='form-label'>
+                        Name
+                      </label>
+                      <input
+                        type='text'
+                        class='form-control'
+                        id='name'
+                        value={formData.name}
+                        onChange={handleChange}
+                        aria-describedby='nameHelp'
+                        required
+                      />
+                    </Col>
+                    <Col xs={6}>
+                      <label for='email' class='form-label'>
+                        Email address
+                      </label>
+                      <input
+                        type='email'
+                        class='form-control'
+                        id='email'
+                        value={formData.email}
+                        onChange={handleChange}
+                        aria-describedby='emailHelp'
+                        required
+                      />
+                    </Col>
+                  </Row>
+                  <div class='mb-3'>
+                    <label for='subject' class='form-label'>
+                      Subject
+                    </label>
+                    <input
+                      type='email'
+                      class='form-control'
+                      id='subject'
+                      value={formData.subject}
+                      onChange={handleChange}
+                      aria-describedby='subjectHelp'
+                      required
+                    />
+                  </div>
+                  <div class='mb-3'>
+                    <label for='messagee' class='form-label'>
+                      Message
+                    </label>
+                    <textarea
+                      type='email'
+                      class='form-control'
+                      id='messagee'
+                      aria-describedby='messageHelp'
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <button type='submit' className='btn btn-secondary'>
+                    <img src={plane} alt='Send icon' className='me-2' />
+                    Send Message
+                  </button>
+                </form>
+              </div>
             </Col>
           </Row>
         </Container>
       </section>
+
       <section>
         <WhyUse />
+      </section>
+
+      <section>
+        <Footer />
       </section>
     </>
   );
