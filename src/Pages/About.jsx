@@ -28,7 +28,7 @@ const About = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("/services/send-email", {
+    const res = await fetch("http://localhost:3000/services/send-email", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
