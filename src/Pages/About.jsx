@@ -13,6 +13,7 @@ import Footer from "../components/Footer/Footer";
 import plane from "../../src/assets/paper-plane.png";
 
 const About = () => {
+  const API_BASE = import.meta.env.VITE_API_BASE;
   const formRef = useRef();
   const [formData, setFormData] = useState({
     name: "",
@@ -28,7 +29,7 @@ const About = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3000/services/send-email", {
+    const res = await fetch(`${API_BASE}/services/send-email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
