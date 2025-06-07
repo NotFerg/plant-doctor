@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Index from "./Pages/Index.jsx";
-import About from "./Pages/About.jsx";
+import About from "./Pages/about.jsx";
 
 function App() {
   return (

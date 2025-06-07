@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import NavBar from "../components/NavBar/NavBar";
 import Pic from "../../src/assets/Pic.jpg";
@@ -13,6 +13,7 @@ import Footer from "../components/Footer/Footer";
 import plane from "../../src/assets/paper-plane.png";
 
 const About = () => {
+  const formRef = useRef();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,11 +25,28 @@ const About = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // 📨 Simulate send message (you can replace this with actual API call)
-    alert(`Message sent!\n\n${JSON.stringify(formData, null, 2)}`);
+
+    const res = await fetch("/services/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    try {
+      const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.error || "Failed to send message");
+      }
+      alert(result.message);
+    } catch (error) {
+      alert("Failed to send message: " + error.message);
+    }
   };
+
   return (
     <>
       <NavBar />
@@ -189,15 +207,15 @@ const About = () => {
             <Col md={8}>
               <div className='p-4 bg-white border rounded-4 shadow h-100'>
                 <h2 className='pb-2'>Send me a message</h2>
-                <form action={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                   <Row>
                     <Col xs={6}>
-                      <label for='name' class='form-label'>
+                      <label htmlFor='name' className='form-label'>
                         Name
                       </label>
                       <input
                         type='text'
-                        class='form-control'
+                        className='form-control'
                         id='name'
                         value={formData.name}
                         onChange={handleChange}
@@ -206,12 +224,12 @@ const About = () => {
                       />
                     </Col>
                     <Col xs={6}>
-                      <label for='email' class='form-label'>
+                      <label htmlFor='email' className='form-label'>
                         Email address
                       </label>
                       <input
                         type='email'
-                        class='form-control'
+                        className='form-control'
                         id='email'
                         value={formData.email}
                         onChange={handleChange}
@@ -220,13 +238,13 @@ const About = () => {
                       />
                     </Col>
                   </Row>
-                  <div class='mb-3'>
-                    <label for='subject' class='form-label'>
+                  <div className='mb-3'>
+                    <label htmlFor='subject' className='form-label'>
                       Subject
                     </label>
                     <input
-                      type='email'
-                      class='form-control'
+                      type='text'
+                      className='form-control'
                       id='subject'
                       value={formData.subject}
                       onChange={handleChange}
@@ -234,14 +252,14 @@ const About = () => {
                       required
                     />
                   </div>
-                  <div class='mb-3'>
-                    <label for='messagee' class='form-label'>
+                  <div className='mb-3'>
+                    <label htmlFor='message' className='form-label'>
                       Message
                     </label>
                     <textarea
-                      type='email'
-                      class='form-control'
-                      id='messagee'
+                      type='text'
+                      className='form-control'
+                      id='message'
                       aria-describedby='messageHelp'
                       value={formData.message}
                       onChange={handleChange}
