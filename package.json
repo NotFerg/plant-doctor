@@ -11,10 +11,12 @@
     "server": "node src/services/index.js"
   },
   "dependencies": {
+    "@google/genai": "^1.5.1",
     "bootstrap": "^5.3.6",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "fetch-blob": "^4.0.0",
     "nodemailer": "^7.0.3",
     "react": "^19.1.0",
     "react-bootstrap": "^2.10.10",

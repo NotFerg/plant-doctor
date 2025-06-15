@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import emailRoutes from "./routes/emailRoutes.js";
+import geminiRoutes from "./routes/geminiRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.json());
 
 //Using Routes
 app.use("/services", emailRoutes);
+app.use("/services", geminiRoutes);
 
 app.listen(port, () => {
   console.log(`Example App listening on port ${port}`);

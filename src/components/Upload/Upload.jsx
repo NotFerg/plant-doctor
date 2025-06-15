@@ -45,48 +45,72 @@ const Upload = () => {
       const base64File = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
+        reader.onload = () => {
+          const result = reader.result;
+          const base64Data = result.includes(",")
+            ? result.split(",")[1]
+            : result;
+          resolve(base64Data);
+        };
         reader.onerror = (error) => reject(error);
       });
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: "First identify if this is a plant or not, if not reply 'Not A Plant' else, Tell me about this plant, in three separate paragraphs give me this Plant Info – (e.g. species, name, type, growth facts), Health Status – (e.g. issues detected, level of health, symptoms) and lastly Care Instructions – (e.g. how to treat, water, sunlight, recovery steps)",
-                },
-                {
-                  inlineData: {
-                    mimeType: file.type,
-                    data: base64File.includes(",")
-                      ? base64File.split(",")[1]
-                      : "",
-                  },
-                },
-              ],
-            },
-          ],
-        }),
-      };
+      // const requestOptions = {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     contents: [
+      //       {
+      //         parts: [
+      //           {
+      //             text: "First identify if this is a plant or not, if not reply 'Not A Plant' else, Tell me about this plant, in three separate paragraphs give me this Plant Info – (e.g. species, name, type, growth facts), Health Status – (e.g. issues detected, level of health, symptoms) and lastly Care Instructions – (e.g. how to treat, water, sunlight, recovery steps)",
+      //           },
+      //           {
+      //             inlineData: {
+      //               mimeType: file.type,
+      //               data: base64File.includes(",")
+      //                 ? base64File.split(",")[1]
+      //                 : "",
+      //             },
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   }),
+      // };
+
+      // const response = await fetch(
+      //   import.meta.env.VITE_GEMINI_API,
+      //   requestOptions
+      // );
 
       const response = await fetch(
-        import.meta.env.VITE_GEMINI_API,
-        requestOptions
+        `${import.meta.env.VITE_API_BASE}/services/gemini-chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // base64Image: base64File.includes(",")
+            //   ? base64File.split(",")[1]
+            //   : "",
+            base64Image: base64File,
+            mimeType: file.type,
+          }),
+        }
       );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      // if (!response.ok) {
+      //   throw new Error(`HTTP error! status: ${response.status}`);
+      // }
 
       const data = await response.json();
+      console.log(data);
 
-      const apiResponseText = data.candidates[0].content.parts[0].text;
+      const apiResponseText = data.reply;
 
       if (apiResponseText.includes("Not A Plant")) {
         SwalModal(
@@ -96,21 +120,30 @@ const Upload = () => {
         );
       }
       const sections = apiResponseText
-        .split(/\n\s*\*\*.*?\*\*\s*\n/)
+        .split(/(?:Plant Info\s*–|Health Status\s*–|Care Instructions\s*–)/)
         .map((s) => s.trim())
         .filter((s) => s.length > 0);
-      const plant = sections[1];
-      const health = sections[2];
-      const care = sections[3];
 
-      setPlantInfo(plant);
-      setHealthStatus(health);
-      setCareInstructions(care);
+      if (sections.length === 3) {
+        const [plant, health, care] = sections;
+
+        setPlantInfo(plant);
+        setHealthStatus(health);
+        setCareInstructions(care);
+      } else {
+        SwalModal(
+          "Parsing Error",
+          "The AI response format was not as expected.",
+          "error"
+        );
+      }
 
       console.log("API RESPONSE", apiResponseText);
     } catch (error) {
-      console.error("Error:", error.message);
-      setError(error.message);
+      console.log("ERROR", error.message);
+      console.log("ERROR 2", error);
+      console.error("Error:", error);
+      setError(error);
       setPlantInfo("");
       setHealthStatus("");
       setCareInstructions("");
