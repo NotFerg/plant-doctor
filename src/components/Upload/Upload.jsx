@@ -110,15 +110,10 @@ const Upload = () => {
       const data = await response.json();
       console.log(data);
 
-      const apiResponseText = data.reply;
+      const apiResponseText = data.reply || data.error;
+      console.log("Type of", typeof apiResponseText);
+      console.log("API RESPONSE", apiResponseText);
 
-      if (apiResponseText.includes("Not A Plant")) {
-        SwalModal(
-          "Not a Plant!",
-          "The Image you have attached is not a plant",
-          "error"
-        );
-      }
       const sections = apiResponseText
         .split(/(?:Plant Info\s*–|Health Status\s*–|Care Instructions\s*–)/)
         .map((s) => s.trim())
@@ -131,14 +126,8 @@ const Upload = () => {
         setHealthStatus(health);
         setCareInstructions(care);
       } else {
-        SwalModal(
-          "Parsing Error",
-          "The AI response format was not as expected.",
-          "error"
-        );
+        SwalModal("Image Upload Error", apiResponseText, "error");
       }
-
-      console.log("API RESPONSE", apiResponseText);
     } catch (error) {
       console.log("ERROR", error.message);
       console.log("ERROR 2", error);

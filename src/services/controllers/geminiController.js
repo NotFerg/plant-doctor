@@ -20,9 +20,16 @@ export const handleGeminiChat = async (req, res) => {
 
     const blob = new Blob([buffer], { type: mimeType });
 
+    let normalizedMimeType = mimeType;
+    if (mimeType === "image/jpg") {
+      normalizedMimeType = "image/jpeg";
+    }
+    const fileName = `upload.${normalizedMimeType.split("/")[1]}`;
+
     const file = await ai.files.upload({
       file: blob,
       config: {
+        fileName,
         mimeType,
       },
     });
