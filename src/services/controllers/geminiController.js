@@ -36,6 +36,9 @@ export const handleGeminiChat = async (req, res) => {
 
     const result = await ai.models.generateContent({
       model: "gemini-2.0-flash",
+      generationConfig: {
+        temperature: 0.2,
+      },
       contents: [
         {
           parts: [
