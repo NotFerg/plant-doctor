@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/services/index.js",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && cd src/services && node index.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "node src/services/index.js"

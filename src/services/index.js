@@ -8,6 +8,15 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
+app.get("/", (req, res) => {
+  res.json({ message: "Plant Doctor API is running" });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Something broke!" });
+});
+
 //middleware
 app.use(
   cors({
