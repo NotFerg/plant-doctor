@@ -1,4 +1,4 @@
-import { handleGeminiChat } from "../src/services/controllers/geminiController";
+import { sendEmail } from "../src/services/controllers/emailController";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await handleGeminiChat(req.body);
+    const result = await sendEmail(req.body);
     return res.status(200).json(result);
   } catch (error) {
     console.error("API Error:", error);

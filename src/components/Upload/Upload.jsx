@@ -87,21 +87,7 @@ const Upload = () => {
       //   requestOptions
       // );
 
-      const response = await fetch(`${API_URL}/services/send-email`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          // base64Image: base64File.includes(",")
-          //   ? base64File.split(",")[1]
-          //   : "",
-          base64Image: base64File,
-          mimeType: file.type,
-        }),
-      });
-
-      // const response = await fetch("/api/gemini-chat", {
+      // const response = await fetch(`${API_URL}/services/send-email`, {
       //   method: "POST",
       //   headers: {
       //     "Content-Type": "application/json",
@@ -114,6 +100,20 @@ const Upload = () => {
       //     mimeType: file.type,
       //   }),
       // });
+
+      const response = await fetch("/api/gemini-chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // base64Image: base64File.includes(",")
+          //   ? base64File.split(",")[1]
+          //   : "",
+          base64Image: base64File,
+          mimeType: file.type,
+        }),
+      });
 
       // if (!response.ok) {
       //   throw new Error(`HTTP error! status: ${response.status}`);
