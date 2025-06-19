@@ -1,15 +1,10 @@
-import { handleGeminiChat } from "../src/services/controllers/geminiController";
+import { handleGeminiChat } from "../src/services/controllers/geminiController.js";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
   try {
-    const result = await handleGeminiChat(req.body);
-    return res.status(200).json(result);
+    return await handleGeminiChat(req, res);
   } catch (error) {
-    console.error("API Error:", error);
-    return res.status(500).json({ error: error.message });
+    console.error("Handler error:", error);
+    return res.status(500).json({ error: "Function invocation failed" });
   }
 }
