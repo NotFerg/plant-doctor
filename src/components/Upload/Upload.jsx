@@ -123,8 +123,8 @@ const Upload = () => {
       console.log(data);
 
       const apiResponseText = data.reply || data.error;
-      console.log("Type of", typeof apiResponseText);
-      console.log("API RESPONSE", apiResponseText);
+      // console.log("Type of", typeof apiResponseText);
+      // console.log("API RESPONSE", apiResponseText);
 
       const sections = apiResponseText
         .split(/(?:Plant Info\s*–|Health Status\s*–|Care Instructions\s*–)/)
@@ -141,9 +141,9 @@ const Upload = () => {
         SwalModal("Image Upload Error", apiResponseText, "error");
       }
     } catch (error) {
-      console.log("ERROR", error.message);
-      console.log("ERROR 2", error);
-      console.error("Error:", error);
+      // console.log("ERROR", error.message);
+      // console.log("ERROR 2", error);
+      // console.error("Error:", error);
       setError(error);
       setPlantInfo("");
       setHealthStatus("");
