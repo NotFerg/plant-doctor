@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import emailRoutes from "./routes/emailRoutes.js";
-import geminiRoutes from "./routes/geminiRoutes.js";
+import emailRoutes from "../../api/routes/emailRoutes.js";
+import geminiRoutes from "../../api/routes/geminiRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -37,8 +37,8 @@ app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use("/services", emailRoutes);
 app.use("/services", geminiRoutes);
 
-// app.listen(port, () => {
-//   console.log(`Example App listening on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Example App listening on port ${port}`);
+});
 
 export default app;

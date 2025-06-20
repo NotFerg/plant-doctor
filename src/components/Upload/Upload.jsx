@@ -101,7 +101,7 @@ const Upload = () => {
       //   }),
       // });
 
-      const response = await fetch("/api/gemini-chat", {
+      const response = await fetch(`${API_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
