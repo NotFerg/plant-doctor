@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { TypeAnimation } from "react-type-animation";
 import SwalModal from "../SwalModal/SwalModal.jsx";
 import PlantCard from "../PlantCard/PlantCard.jsx";
 
