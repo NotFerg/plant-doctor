@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.post("/gemini-chat", handleGeminiChat);
 
-module.exports;
+module.exports = router;
