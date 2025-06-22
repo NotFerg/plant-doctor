@@ -4,7 +4,8 @@ import SwalModal from "../SwalModal/SwalModal.jsx";
 import PlantCard from "../PlantCard/PlantCard.jsx";
 
 const Upload = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+  const API_URL =
+    import.meta.env.VITE_API_URL || "http://localhost:3000/services/index.js";
   const [file, setFile] = useState(null);
   const [plantInfo, setPlantInfo] = useState("");
   const [healthStatus, setHealthStatus] = useState("");
