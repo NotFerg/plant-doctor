@@ -21,10 +21,7 @@ app.use((err, req, res, next) => {
 app.use(
   cors({
     // add another origin when needed e.g when hosting
-    origin: [
-      "http://localhost:5173",
-      "https://plant-doctor-lp8d2vulo-my-team-577788da.vercel.app/",
-    ],
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
