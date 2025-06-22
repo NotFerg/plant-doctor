@@ -87,7 +87,7 @@ const Upload = () => {
       //   requestOptions
       // );
 
-      // const response = await fetch(`${API_URL}/services/send-email`, {
+      // const response = await fetch(`${API_URL}/services/gemini-chat`, {
       //   method: "POST",
       //   headers: {
       //     "Content-Type": "application/json",
