@@ -2,9 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import emailRoutes from "../../api/routes/emailRoutes.js";
-import geminiRoutesModule from "../../api/routes/geminiRoutes.js";
-
-const geminiRoutes = geminiRoutesModule.default || geminiRoutesModule;
+import geminiRoutes from "../../api/routes/geminiRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -23,7 +21,10 @@ app.use((err, req, res, next) => {
 app.use(
   cors({
     // add another origin when needed e.g when hosting
-    origin: ["http://localhost:5173"],
+    origin: [
+      "http://localhost:5173",
+      "https://plant-doctor-lp8d2vulo-my-team-577788da.vercel.app/",
+    ],
     credentials: true,
   })
 );
@@ -36,8 +37,8 @@ app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use("/services", emailRoutes);
 app.use("/services", geminiRoutes);
 
-// app.listen(port, () => {
-//   console.log(`Example App listening on port ${port}`);
-// });
+app.listen(port, () => {
+  console.log(`Example App listening on port ${port}`);
+});
 
 export default app;

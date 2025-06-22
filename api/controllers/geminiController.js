@@ -1,15 +1,13 @@
-const { GoogleGenAI } = require("@google/genai");
-const { PLANT_ANALYSIS_PROMPT } = require("../utils/prompt.js");
-const dotenv = require("dotenv");
+import { GoogleGenAI } from "@google/genai";
+import { PLANT_ANALYSIS_PROMPT } from "../utils/prompt.js";
+import dotenv from "dotenv";
 dotenv.config();
 
-const fetchBlob = require("fetch-blob");
-const Blob = fetchBlob.Blob;
-
+const { Blob } = await import("fetch-blob");
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-const handleGeminiChat = async (req, res) => {
+export const handleGeminiChat = async (req, res) => {
   const { base64Image, mimeType } = req.body;
 
   if (!base64Image) {
@@ -64,4 +62,12 @@ const handleGeminiChat = async (req, res) => {
   }
 };
 
-module.exports = { handleGeminiChat };
+// async function main() {
+//   const response = await ai.models.generateContent({
+//     model: 'gemini-2.0-flash-001',
+//     contents: 'Why is the sky blue?',
+//   });
+//   console.log(response.text);
+// }
+
+// main();
