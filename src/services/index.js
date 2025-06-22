@@ -37,8 +37,8 @@ app.use(express.urlencoded({ extended: true, limit: "5mb" }));
 app.use("/services", emailRoutes);
 app.use("/services", geminiRoutes);
 
-app.listen(port, () => {
-  console.log(`Example App listening on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Example App listening on port ${port}`);
+// });
 
 export default app;
