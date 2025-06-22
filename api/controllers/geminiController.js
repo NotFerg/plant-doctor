@@ -3,11 +3,12 @@ import { PLANT_ANALYSIS_PROMPT } from "../utils/prompt.js";
 import dotenv from "dotenv";
 dotenv.config();
 
-const { Blob } = await import("fetch-blob");
+import { Blob } from "fetch-blob";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 export const handleGeminiChat = async (req, res) => {
+  console.log("reached");
   const { base64Image, mimeType } = req.body;
 
   if (!base64Image) {
