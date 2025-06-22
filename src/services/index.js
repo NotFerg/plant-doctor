@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import emailRoutes from "../../api/routes/emailRoutes.js";
-import geminiRoutes from "../../api/routes/geminiRoutes.js";
+import geminiRoutesModule from "../../api/routes/geminiRoutes.js"; // <-- change here
+
+const geminiRoutes = geminiRoutesModule; // for clarity, or use .default if needed
 
 dotenv.config();
 const app = express();
