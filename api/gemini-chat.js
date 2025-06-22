@@ -1,4 +1,4 @@
-import { handleGeminiChat } from "../src/services/controllers/geminiController.js";
+import { handleGeminiChat } from "./controllers/geminiController";
 
 export default async function handler(req, res) {
   try {
