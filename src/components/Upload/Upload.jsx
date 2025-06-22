@@ -138,9 +138,11 @@ const Upload = () => {
         setHealthStatus(health);
         setCareInstructions(care);
       } else {
+        console.log("API RESPONSE ERROR", apiResponseText);
         SwalModal("Image Upload Error", apiResponseText, "error");
       }
     } catch (error) {
+      console.log("CATCH ERROR", error);
       // console.log("ERROR", error.message);
       // console.log("ERROR 2", error);
       // console.error("Error:", error);
