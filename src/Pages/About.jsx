@@ -29,7 +29,15 @@ const About = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`${API_BASE}/services/send-email`, {
+    // const res = await fetch(`${API_BASE}/services/send-email`, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // });
+
+    const res = await fetch(`/api/send-email`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

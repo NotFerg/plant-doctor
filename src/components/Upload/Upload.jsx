@@ -87,6 +87,7 @@ const Upload = () => {
       //   requestOptions
       // );
 
+      // For Local Dev
       // const response = await fetch(`${API_URL}/services/gemini-chat`, {
       //   method: "POST",
       //   headers: {

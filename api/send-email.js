@@ -1,4 +1,4 @@
-import { sendEmail } from "../src/services/controllers/emailController";
+import { sendEmail } from "./controllers/emailController";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
