@@ -11,6 +11,7 @@ import linkedin from "../../src/assets/linkedin.png";
 import WhyUse from "../components/WhyUse/WhyUse";
 import Footer from "../components/Footer/Footer";
 import plane from "../../src/assets/paper-plane.png";
+import SwalModal from "../components/SwalModal/SwalModal";
 
 const About = () => {
   const API_BASE = import.meta.env.VITE_API_BASE;
@@ -50,9 +51,9 @@ const About = () => {
       if (!res.ok) {
         throw new Error(result.error || "Failed to send message");
       }
-      alert(result.message);
+      SwalModal("Email Sent Succesfully", result, "success");
     } catch (error) {
-      alert("Failed to send message: " + error.message);
+      SwalModal("Failed to send message", result, "error");
     }
   };
 
