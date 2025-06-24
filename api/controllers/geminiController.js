@@ -8,7 +8,6 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 export const handleGeminiChat = async (req, res) => {
-  console.log("reached");
   const { base64Image, mimeType } = req.body;
 
   if (!base64Image) {
