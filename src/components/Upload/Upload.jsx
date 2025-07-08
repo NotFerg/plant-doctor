@@ -4,8 +4,9 @@ import SwalModal from "../SwalModal/SwalModal.jsx";
 import PlantCard from "../PlantCard/PlantCard.jsx";
 
 const Upload = () => {
-  const API_URL =
-    import.meta.env.VITE_API_URL || "http://localhost:3000/services/index.js";
+  const API_URL = import.meta.env.VITE_API_URL
+    ? "/api/gemini-chat"
+    : "http://localhost:3000/services/gemini-chat";
   const [file, setFile] = useState(null);
   const [plantInfo, setPlantInfo] = useState("");
   const [healthStatus, setHealthStatus] = useState("");
@@ -88,7 +89,7 @@ const Upload = () => {
       // );
 
       // For Local Dev
-      // const response = await fetch(`${API_URL}/services/gemini-chat`, {
+      // const response = await fetch(`${API_URL}services/gemini-chat`, {
       //   method: "POST",
       //   headers: {
       //     "Content-Type": "application/json",
@@ -102,7 +103,7 @@ const Upload = () => {
       //   }),
       // });
 
-      const response = await fetch(`/api/gemini-chat`, {
+      const response = await fetch(`${API_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -115,6 +116,20 @@ const Upload = () => {
           mimeType: file.type,
         }),
       });
+
+      // const response = await fetch(`/api/gemini-chat`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     // base64Image: base64File.includes(",")
+      //     //   ? base64File.split(",")[1]
+      //     //   : "",
+      //     base64Image: base64File,
+      //     mimeType: file.type,
+      //   }),
+      // });
 
       // if (!response.ok) {
       //   throw new Error(`HTTP error! status: ${response.status}`);
