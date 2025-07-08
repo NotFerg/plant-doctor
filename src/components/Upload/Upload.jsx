@@ -83,26 +83,6 @@ const Upload = () => {
       //   }),
       // };
 
-      // const response = await fetch(
-      //   import.meta.env.VITE_GEMINI_API,
-      //   requestOptions
-      // );
-
-      // For Local Dev
-      // const response = await fetch(`${API_URL}services/gemini-chat`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     // base64Image: base64File.includes(",")
-      //     //   ? base64File.split(",")[1]
-      //     //   : "",
-      //     base64Image: base64File,
-      //     mimeType: file.type,
-      //   }),
-      // });
-
       const response = await fetch(`${API_URL}`, {
         method: "POST",
         headers: {
@@ -116,20 +96,6 @@ const Upload = () => {
           mimeType: file.type,
         }),
       });
-
-      // const response = await fetch(`/api/gemini-chat`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     // base64Image: base64File.includes(",")
-      //     //   ? base64File.split(",")[1]
-      //     //   : "",
-      //     base64Image: base64File,
-      //     mimeType: file.type,
-      //   }),
-      // });
 
       // if (!response.ok) {
       //   throw new Error(`HTTP error! status: ${response.status}`);
@@ -159,9 +125,6 @@ const Upload = () => {
       }
     } catch (error) {
       console.log("CATCH ERROR", error);
-      // console.log("ERROR", error.message);
-      // console.log("ERROR 2", error);
-      // console.error("Error:", error);
       setError(error);
       setPlantInfo("");
       setHealthStatus("");
